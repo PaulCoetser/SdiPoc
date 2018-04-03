@@ -1,0 +1,83 @@
+﻿<div bsModal #editApplicationModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="editApplicationModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+
+        <div #modalContent class="modal-content">
+
+            <form *ngIf="active" #editApplicationForm="ngForm" id="frm_edit_developer" novalidate (ngSubmit)="save()">
+
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>{{l("EditDeveloper")}} {{developerName}}</span> 
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input class="form-control" type="text" name="Name" [(ngModel)]="application.name" [disabled]=true  required maxlength="32" minlength="2">
+                            <label class="form-label">{{l("ApplicationName")}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="Description" class="form-control" [(ngModel)]="application.description" [disabled]=true  required maxlength="128">
+                            <label class="form-label">{{l("Description")}}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="Domain" class="form-control" [(ngModel)]="application.domain" [disabled]=true  required maxlength="32">
+                            <label class="form-label">{{l("Domain")}}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="Website" class="form-control" [(ngModel)]="application.website" [disabled]=true  required maxlength="256">
+                            <label class="form-label">{{l("WebSite")}}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="ApprovalUrl" class="form-control" [(ngModel)]="application.approvalUrl" [disabled]=true  required maxlength="256">
+                            <label class="form-label">{{l("ApprovalUrl")}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="UploadUrl" class="form-control" [(ngModel)]="application.uploadUrl" [disabled]=true  required maxlength="256">
+                            <label class="form-label">{{l("UploadUrl")}}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="RegistrationUrl" class="form-control" [(ngModel)]="application.registrationUrl" readonly maxlength="256" pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$">
+                            <label class="form-label">{{l("RegistrationUrl")}}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="ApplicationIdFromSdiPlatform" class="form-control" [readonly]="containsApplicationIdFromSdiPlatform"  [(ngModel)]="application.applicationIdFromSdiPlatform" maxlength="32">
+                            <label class="form-label">{{l("ApplicationIdFromSdiPlatform")}}</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button [disabled]="!editApplicationForm.form.valid || saving" type="submit" class="btn btn-primary blue">{{l("Save")}}</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

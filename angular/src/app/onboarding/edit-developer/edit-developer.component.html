@@ -1,0 +1,48 @@
+﻿<div bsModal #editDeveloperModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="editDeveloperModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+
+        <div #modalContent class="modal-content">
+
+            <form *ngIf="active" #editDeveloperForm="ngForm" id="frm_edit_developer" novalidate (ngSubmit)="save()">
+
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>{{l("EditDeveloper")}}</span>
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input class="form-control" type="text" name="Name" [disabled]=true [(ngModel)]="developer.name" required maxlength="64" minlength="2">
+                            <label class="form-label">{{l("DeveloperName")}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="email" name="Email" class="form-control" [(ngModel)]="developer.email" [disabled]=true required maxlength="64" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
+                            <label class="form-label">{{l("EmailAddress")}}</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="DeveloperIdFromSdiPlatform" class="form-control" [readonly]="containsDeveloperIdFromSdiPlatform"  [(ngModel)]="developer.developerIdFromSdiPlatform" maxlength="32">
+                            <label class="form-label">{{l("DeveloperIdFromSdiPlatform")}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button [disabled]="!editDeveloperForm.form.valid || saving" type="submit" class="btn btn-primary blue">{{l("Save")}}</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
