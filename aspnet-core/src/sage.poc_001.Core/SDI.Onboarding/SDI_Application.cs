@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace sage.poc_001.Onboarding
+namespace sage.poc_001.SDI.Onboarding
 {
     [Table("SDIApplications")]
     public class SDI_Application : FullAuditedEntity<int>
@@ -39,7 +39,6 @@ namespace sage.poc_001.Onboarding
         public string RegistrationUrl { get; set; }
 
         public string ApplicationIdFromSdiPlatform { get; set; }
-
         public int SDI_DeveloperId { get; set; }
     }
 }

@@ -48,7 +48,7 @@ export class LoginService {
 
         if (authenticateResult.accessToken) {
             //Successfully logged in
-            this.login(authenticateResult.accessToken, authenticateResult.encryptedAccessToken, authenticateResult.expireInSeconds, this.rememberMe);
+            this.login(authenticateResult.accessToken, authenticateResult.encryptedAccessToken, authenticateResult.expireInSeconds, authenticateResult.userId, this.rememberMe);
 
         } else {
             //Unexpected result!
@@ -58,7 +58,7 @@ export class LoginService {
         }
     }
 
-    private login(accessToken: string, encryptedAccessToken: string, expireInSeconds: number, rememberMe?: boolean): void {
+    private login(accessToken: string, encryptedAccessToken: string, expireInSeconds: number, userId: number, rememberMe?: boolean): void {
 
         var tokenExpireDate = rememberMe ? (new Date(new Date().getTime() + 1000 * expireInSeconds)) : undefined;
 
@@ -70,6 +70,13 @@ export class LoginService {
         this._utilsService.setCookieValue(
             AppConsts.authorization.encrptedAuthTokenName,
             encryptedAccessToken,
+            tokenExpireDate,
+            abp.appPath
+        );
+
+        this._utilsService.setCookieValue(
+            AppConsts.userId.userIdName,
+            userId.toString(),
             tokenExpireDate,
             abp.appPath
         );

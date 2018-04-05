@@ -1,6 +1,6 @@
 using Abp.Application.Services;
 
-namespace sage.poc_001.Onboarding
+namespace sage.poc_001.SDI.Onboarding
 {
     public interface IOnboardingAppService : IApplicationService
     {

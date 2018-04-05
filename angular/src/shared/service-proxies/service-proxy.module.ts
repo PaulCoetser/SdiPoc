@@ -12,6 +12,7 @@ import * as sdiApiServiceProxies from './sdi-service-proxies';
         ApiServiceProxies.TokenAuthServiceProxy,
         ApiServiceProxies.AccountServiceProxy,
         ApiServiceProxies.OnboardingServiceProxy,
+        ApiServiceProxies.SDIServiceProxy,
         ApiServiceProxies.ConfigurationServiceProxy,
         sdiApiServiceProxies.SDIRegistrationServiceProxy
     ]

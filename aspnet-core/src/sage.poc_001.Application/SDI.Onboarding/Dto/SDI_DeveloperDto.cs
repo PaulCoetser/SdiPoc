@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 
-namespace sage.poc_001.Onboarding.Dto
+namespace sage.poc_001.SDI.Onboarding.Dto
 {
     [AutoMapTo(typeof(SDI_Developer))]
     public class SDI_DeveloperDto : EntityDto<int>

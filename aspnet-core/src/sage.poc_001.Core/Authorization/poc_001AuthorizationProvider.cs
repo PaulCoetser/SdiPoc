@@ -13,6 +13,7 @@ namespace sage.poc_001.Authorization
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
 
             context.CreatePermission(PermissionNames.Pages_Onboarding, L("Onboarding"));
+            context.CreatePermission(PermissionNames.Pages_SDIApplication, L("SDIApplication"));
         }
 
         private static ILocalizableString L(string name)

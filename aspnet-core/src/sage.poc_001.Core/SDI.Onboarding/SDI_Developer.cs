@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace sage.poc_001.Onboarding
+namespace sage.poc_001.SDI.Onboarding
 {
     [Table("SDIDevelopers")]
     public class SDI_Developer : FullAuditedEntity<int>

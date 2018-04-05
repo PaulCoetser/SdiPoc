@@ -2,7 +2,7 @@ using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using System.ComponentModel.DataAnnotations;
 
-namespace sage.poc_001.Onboarding.Dto
+namespace sage.poc_001.SDI.Onboarding.Dto
 {
     [AutoMapTo(typeof(SDI_Application))]
     public class SDI_ApplicationDto : EntityDto<int>
@@ -30,5 +30,6 @@ namespace sage.poc_001.Onboarding.Dto
         public int SDI_DeveloperId { get; set; }
 
         public string ApplicationIdFromSdiPlatform { get; set; }
+        public string PasscodeFromSdiPlatform { get; set; }
     }
 }

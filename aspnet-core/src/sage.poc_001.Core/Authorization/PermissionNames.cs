@@ -9,5 +9,6 @@
         public const string Pages_Roles = "Pages.Roles";
 
         public const string Pages_Onboarding = "Pages.Onboarding";
+        public const string Pages_SDIApplication = "Pages.SDIApplication";
     }
 }

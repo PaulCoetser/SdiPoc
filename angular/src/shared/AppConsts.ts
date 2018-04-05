@@ -1,5 +1,7 @@
 ﻿export class AppConsts {
 
+    static sdiSecret: string;
+
     static remoteServiceBaseUrl: string;
 
     static remoteSdiServiceBaseUrl: string;
@@ -16,5 +18,9 @@
 
     static readonly authorization = {
         encrptedAuthTokenName: 'enc_auth_token'
+    };
+
+    static readonly userId = {
+        userIdName: 'userId'
     };
 }

@@ -46,7 +46,7 @@ export class CreateDeveloperComponent extends AppComponentBase {
 
         this.application = new SDI_ApplicationDto();
         //this.application.init({sdI_DeveloperId: this.developer.id});
-        this.application.init({ sdI_DeveloperId: this.developer.id, name: 'UniqueAppName 1', description: 'Application Description 1', website: 'https://www.sage.com/', domain: 'ecommerce', approvalUrl: 'https://someurlformy3rdpartyapp.com', uploadUrl: 'https://someurlformy3rdpartyapp.com' });
+        this.application.init({ sdI_DeveloperId: this.developer.id, name: 'UniqueAppName 1', description: 'Application Description 1', website: 'http://localhost/', domain: 'ecommerce', approvalUrl: 'http://localhost:4200/notifications/PassCodeConsented', uploadUrl: 'http://localhost:4200/notifications/FileUploaded' });
     }
 
     onShown(): void {

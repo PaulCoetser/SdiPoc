@@ -97,7 +97,7 @@ export class SDIRegistrationServiceProxy {
     registerApplication(developerId: string, input: Application): Observable<SDISignupOutput> {
         let url_ = this.baseUrl + '/api/developers/' + developerId +'/applications';
         url_ = url_.replace(/[?&]$/, '');
-        input
+
         const content_ = JSON.stringify(input);
 
         let options_: any = {
@@ -139,6 +139,62 @@ export class SDIRegistrationServiceProxy {
         }
         return Observable.of<SDISignupOutput>(<any>null);
     }
+
+
+
+
+
+      /**
+     * @input required)
+     * @return Success
+     */
+    generatePasscode(developerId: string, applicationId: string, input: SDIPasscodeInput): Observable<SDIPasscodeOutput> {
+        let url_ = this.baseUrl + '/api/developers/' + developerId + '/applications/' + applicationId + '/passcodes';
+        url_ = url_.replace(/[?&]$/, '');
+
+        const content_ = JSON.stringify(input);
+
+        let options_: any = {
+            body: content_,
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_: any) => {
+            return this.processGeneratePasscode(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGeneratePasscode(<any>response_);
+                } catch (e) {
+                    return <Observable<SDIPasscodeOutput>><any>Observable.throw(e);
+                }
+            } else {
+                return <Observable<SDIPasscodeOutput>><any>Observable.throw(response_);
+            }
+        });
+    }
+
+    protected processGeneratePasscode(response: Response): Observable<SDIPasscodeOutput> {
+        const status = response.status;
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? SDIPasscodeOutput.fromJS(resultData200) : new SDIPasscodeOutput();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+        }
+        return Observable.of<SDIPasscodeOutput>(<any>null);
+    }
+
+
 }
 
 
@@ -361,6 +417,109 @@ export class SDISignupOutput implements ISDISignupOutput {
 export interface ISDISignupOutput {
     registrationUrl: string;
 }
+
+
+
+
+export class SDIPasscodeInput implements ISDIPasscodeInput {
+    secret: string;
+
+    static fromJS(data: any): ISDIPasscodeInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SDIPasscodeInput();
+        result.init(data);
+        return result;
+    }
+
+    constructor(data?: ISDIPasscodeInput) {
+        if (data) {
+            for (let property in data) {
+                if (data.hasOwnProperty(property)) {
+                    (<any>this)[property] = (<any>data)[property];
+                }
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.secret = data['secret'];
+        }
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data['secret'] = this.secret;
+        return data;
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new SDIPasscodeInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISDIPasscodeInput {
+    secret: string;
+}
+
+
+
+
+export class SDIPasscodeOutput implements ISDIPasscodeOutput {
+    passcode: string;
+    expires: string;
+
+    static fromJS(data: any): ISDIPasscodeOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new SDIPasscodeOutput();
+        result.init(data);
+        return result;
+    }
+
+    constructor(data?: ISDIPasscodeOutput) {
+        if (data) {
+            for (let property in data) {
+                if (data.hasOwnProperty(property)) {
+                    (<any>this)[property] = (<any>data)[property];
+                }
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.passcode = data['passcode'];
+            this.expires = data['expires'];
+        }
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data['passcode'] = this.passcode;
+        data['expires'] = this.expires;
+        return data;
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new SDIPasscodeOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISDIPasscodeOutput {
+    passcode: string;
+    expires: string;
+}
+
+
+
+
+
 
 function throwException(message: string,
                         status: number,

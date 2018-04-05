@@ -1210,6 +1210,134 @@ export class RoleServiceProxy {
 }
 
 @Injectable()
+export class SDIServiceProxy {
+    private http: Http;
+    private baseUrl: string;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "/";
+    }
+
+    /**
+     * @return Success
+     */
+    getLatestPasscodeByUserId(userId: number, sdi_ApplicationId: number): Observable<SDI_UserDto> {
+        let url_ = this.baseUrl + "/api/services/app/SDI/GetLatestPasscodeByUserId?";
+        if (userId === undefined || userId === null)
+            throw new Error("The parameter 'userId' must be defined and cannot be null.");
+        else
+            url_ += "userId=" + encodeURIComponent("" + userId) + "&"; 
+        if (sdi_ApplicationId === undefined || sdi_ApplicationId === null)
+            throw new Error("The parameter 'sdi_ApplicationId' must be defined and cannot be null.");
+        else
+            url_ += "sdi_ApplicationId=" + encodeURIComponent("" + sdi_ApplicationId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
+            return this.processGetLatestPasscodeByUserId(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetLatestPasscodeByUserId(<any>response_);
+                } catch (e) {
+                    return <Observable<SDI_UserDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<SDI_UserDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetLatestPasscodeByUserId(response: Response): Observable<SDI_UserDto> {
+        const status = response.status;
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? SDI_UserDto.fromJS(resultData200) : new SDI_UserDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<SDI_UserDto>(<any>null);
+    }
+
+    /**
+     * @input (optional) 
+     * @return Success
+     */
+    updatePasscode(input: SDI_UserDto): Observable<SDI_UserDto> {
+        let url_ = this.baseUrl + "/api/services/app/SDI/UpdatePasscode";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
+            return this.processUpdatePasscode(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processUpdatePasscode(<any>response_);
+                } catch (e) {
+                    return <Observable<SDI_UserDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<SDI_UserDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdatePasscode(response: Response): Observable<SDI_UserDto> {
+        const status = response.status;
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? SDI_UserDto.fromJS(resultData200) : new SDI_UserDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<SDI_UserDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class SessionServiceProxy {
     private http: Http;
     private baseUrl: string;
@@ -2455,7 +2583,7 @@ export class SDI_DeveloperDto implements ISDI_DeveloperDto {
     developerIdFromSdiPlatform: string;
     applications: SDI_ApplicationDto[];
     id: number;
-    
+
     constructor(data?: ISDI_DeveloperDto) {
         if (data) {
             for (var property in data) {
@@ -2535,6 +2663,7 @@ export class SDI_ApplicationDto implements ISDI_ApplicationDto {
     registrationUrl: string;
     sdI_DeveloperId: number;
     applicationIdFromSdiPlatform: string;
+    passcodeFromSdiPlatform: string;
     id: number;
 
     constructor(data?: ISDI_ApplicationDto) {
@@ -2557,6 +2686,7 @@ export class SDI_ApplicationDto implements ISDI_ApplicationDto {
             this.registrationUrl = data["registrationUrl"];
             this.sdI_DeveloperId = data["sdI_DeveloperId"];
             this.applicationIdFromSdiPlatform = data["applicationIdFromSdiPlatform"];
+            this.passcodeFromSdiPlatform = data["passcodeFromSdiPlatform"];
             this.id = data["id"];
         }
     }
@@ -2579,6 +2709,7 @@ export class SDI_ApplicationDto implements ISDI_ApplicationDto {
         data["registrationUrl"] = this.registrationUrl;
         data["sdI_DeveloperId"] = this.sdI_DeveloperId;
         data["applicationIdFromSdiPlatform"] = this.applicationIdFromSdiPlatform;
+        data["passcodeFromSdiPlatform"] = this.passcodeFromSdiPlatform;
         data["id"] = this.id;
         return data; 
     }
@@ -2601,6 +2732,7 @@ export interface ISDI_ApplicationDto {
     registrationUrl: string;
     sdI_DeveloperId: number;
     applicationIdFromSdiPlatform: string;
+    passcodeFromSdiPlatform: string;
     id: number;
 }
 
@@ -3015,6 +3147,69 @@ export class PagedResultDtoOfRoleDto implements IPagedResultDtoOfRoleDto {
 export interface IPagedResultDtoOfRoleDto {
     totalCount: number;
     items: RoleDto[];
+}
+
+export class SDI_UserDto implements ISDI_UserDto {
+    passcode: string;
+    expires: moment.Moment;
+    sdI_ApplicationId: number;
+    userId: number;
+    applicationIdFromSdiPlatform: string;
+    id: number;
+
+    constructor(data?: ISDI_UserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.passcode = data["passcode"];
+            this.expires = data["expires"] ? moment(data["expires"].toString()) : <any>undefined;
+            this.sdI_ApplicationId = data["sdI_ApplicationId"];
+            this.userId = data["userId"];
+            this.applicationIdFromSdiPlatform = data["applicationIdFromSdiPlatform"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): SDI_UserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SDI_UserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["passcode"] = this.passcode;
+        data["expires"] = this.expires ? this.expires.toISOString() : <any>undefined;
+        data["sdI_ApplicationId"] = this.sdI_ApplicationId;
+        data["userId"] = this.userId;
+        data["applicationIdFromSdiPlatform"] = this.applicationIdFromSdiPlatform;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new SDI_UserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISDI_UserDto {
+    passcode: string;
+    expires: moment.Moment;
+    sdI_ApplicationId: number;
+    userId: number;
+    applicationIdFromSdiPlatform: string;
+    id: number;
 }
 
 export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInformationsOutput {

@@ -4,12 +4,12 @@ using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using sage.poc_001.Authorization;
-using sage.poc_001.Onboarding.Dto;
+using sage.poc_001.SDI.Onboarding.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.IdentityFramework;
 
-namespace sage.poc_001.Onboarding
+namespace sage.poc_001.SDI.Onboarding
 {
     [AbpAuthorize(PermissionNames.Pages_Onboarding)]
     public class OnboardingAppService : AsyncCrudAppService<SDI_Developer, SDI_DeveloperDto, int, PagedResultRequestDto, SDI_DeveloperDto, SDI_DeveloperDto>, IOnboardingAppService //poc_001AppServiceBase, IOnboardingAppService 
