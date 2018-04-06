@@ -48,10 +48,6 @@ export function getRemoteSdiServiceBaseUrl(): string {
   return AppConsts.remoteSdiServiceBaseUrl;
 }
 
-export function getsdiSecret(): string {
-  return AppConsts.sdiSecret;
-}
-
 export function getCurrentLanguage(): string {
     return abp.localization.currentLanguage.name;
 }

@@ -11,6 +11,10 @@ namespace sage.poc_001.SDI.Application.Dto
         public SDI_UserDto() { }
 
         [Required]
+        [StringLength(SDI_User.MaxSecretLength)]
+        public string Secret { get; set; }
+
+        [Required]
         [StringLength(SDI_User.MaxPasscodeLength)]
         public string Passcode { get; set; }
 

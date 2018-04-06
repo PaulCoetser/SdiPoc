@@ -14,8 +14,13 @@ namespace sage.poc_001.SDI.Application
 
         public SDI_User() { }
 
+        public const int MaxSecretLength = 64;
         public const int MaxPasscodeLength = 10;
         public const int MaxApplicationIdFromSdiPlatformLength = 32;
+        
+        [Required]
+        [StringLength(MaxSecretLength)]
+        public string Secret { get; set; }
 
         [Required]
         [StringLength(MaxPasscodeLength)]

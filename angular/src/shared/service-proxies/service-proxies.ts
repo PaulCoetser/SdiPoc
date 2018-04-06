@@ -3150,6 +3150,7 @@ export interface IPagedResultDtoOfRoleDto {
 }
 
 export class SDI_UserDto implements ISDI_UserDto {
+    secret: string;
     passcode: string;
     expires: moment.Moment;
     sdI_ApplicationId: number;
@@ -3168,6 +3169,7 @@ export class SDI_UserDto implements ISDI_UserDto {
 
     init(data?: any) {
         if (data) {
+            this.secret = data["secret"];
             this.passcode = data["passcode"];
             this.expires = data["expires"] ? moment(data["expires"].toString()) : <any>undefined;
             this.sdI_ApplicationId = data["sdI_ApplicationId"];
@@ -3186,6 +3188,7 @@ export class SDI_UserDto implements ISDI_UserDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["secret"] = this.secret;
         data["passcode"] = this.passcode;
         data["expires"] = this.expires ? this.expires.toISOString() : <any>undefined;
         data["sdI_ApplicationId"] = this.sdI_ApplicationId;
@@ -3204,6 +3207,7 @@ export class SDI_UserDto implements ISDI_UserDto {
 }
 
 export interface ISDI_UserDto {
+    secret: string;
     passcode: string;
     expires: moment.Moment;
     sdI_ApplicationId: number;

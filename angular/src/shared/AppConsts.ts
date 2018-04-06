@@ -1,7 +1,5 @@
 ﻿export class AppConsts {
 
-    static sdiSecret: string;
-
     static remoteServiceBaseUrl: string;
 
     static remoteSdiServiceBaseUrl: string;

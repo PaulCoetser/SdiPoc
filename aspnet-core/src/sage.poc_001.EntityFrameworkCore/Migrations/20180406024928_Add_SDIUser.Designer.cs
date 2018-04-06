@@ -16,8 +16,8 @@ using System;
 namespace sage.poc_001.Migrations
 {
     [DbContext(typeof(poc_001DbContext))]
-    [Migration("20180405083010_Add_SDI_User")]
-    partial class Add_SDI_User
+    [Migration("20180406024928_Add_SDIUser")]
+    partial class Add_SDIUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1049,6 +1049,10 @@ namespace sage.poc_001.Migrations
                         .HasMaxLength(10);
 
                     b.Property<int>("SDI_ApplicationId");
+
+                    b.Property<string>("Secret")
+                        .IsRequired()
+                        .HasMaxLength(64);
 
                     b.Property<long>("UserId");
 

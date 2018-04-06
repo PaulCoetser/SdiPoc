@@ -205,8 +205,32 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
         return (obj && (Object.keys(obj).length === 0));
     }
 
+    /*generateUUID(): string { // Public Domain/MIT
+        var d = new Date().getTime();
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+            d += performance.now(); // use high-precision timer if available
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }*/
+
+    generateSecret(): string {
+        return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxxxxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+        });
+    }
+
     refreshPasscode(): void {
         // this.saving = false;
+        let secret = this.generateSecret();
+        if (this.selectedUser !== undefined) { // editmode
+            secret = this.selectedUser.secret;
+        }
+
         this.refreshLoading = true;
         const userId = this._utilsService.getCookieValue(AppConsts.userId.userIdName);
         const userIdNumber = Number(userId);
@@ -215,8 +239,8 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
             //if (this.isEmptyObject(result)) {
                 // Create / refresh the passcode from the SDI Platform
                 let input = new SDIPasscodeInput();
-                input.init( { secret: AppConsts.sdiSecret });
-                
+                input.init( { secret: secret });
+
                 this._sdiRegistrationService.generatePasscode(this.selectedDeveloper.developerIdFromSdiPlatform,
                                                               this.selectedApplication.applicationIdFromSdiPlatform, input)
                 .subscribe((resultPassCode: SDIPasscodeOutput) => {
@@ -228,11 +252,12 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
                         sdiuser.userId = userIdNumber;
                         sdiuser.sdI_ApplicationId = this.selectedApplication.id;
                         sdiuser.applicationIdFromSdiPlatform = this.selectedApplication.applicationIdFromSdiPlatform;
+                        sdiuser.secret = secret;
                     }
 
                     sdiuser.passcode = resultPassCode.passcode;
                     sdiuser.expires = moment(resultPassCode.expires);
-                    
+
                     // save the user / passcode in the 3rd party application
                     this._sDIServiceProxy.updatePasscode(sdiuser)
                     .finally( () => {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace sage.poc_001.Migrations
 {
-    public partial class Add_SDI_User : Migration
+    public partial class Add_SDIUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,7 @@ namespace sage.poc_001.Migrations
                     Expires = table.Column<DateTimeOffset>(nullable: false),
                     Passcode = table.Column<string>(maxLength: 10, nullable: false),
                     SDI_ApplicationId = table.Column<int>(nullable: false),
+                    Secret = table.Column<string>(maxLength: 64, nullable: false),
                     UserId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>

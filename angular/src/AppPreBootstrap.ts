@@ -26,7 +26,6 @@ export class AppPreBootstrap {
             AppConsts.appBaseUrl = result.appBaseUrl;
             AppConsts.remoteServiceBaseUrl = result.remoteServiceBaseUrl;
             AppConsts.remoteSdiServiceBaseUrl = result.remoteSdiServiceBaseUrl;
-            AppConsts.sdiSecret = result.sdiSecret;
             callback();
         });
     }

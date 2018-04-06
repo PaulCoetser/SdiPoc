@@ -1049,6 +1049,10 @@ namespace sage.poc_001.Migrations
 
                     b.Property<int>("SDI_ApplicationId");
 
+                    b.Property<string>("Secret")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
                     b.Property<long>("UserId");
 
                     b.HasKey("Id");

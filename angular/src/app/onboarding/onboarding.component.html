@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <div class="card main-content" *ngIf="selectedApplication !== undefined">
+        <div class="card main-content" *ngIf="selectedApplication !== undefined && containsApplicationIdFromSdiPlatform(selectedApplication)">
             <div class="header">
                 <h2 *ngIf="selectedUser === undefined">
                     No passcode for this user and application.  Please load a passcode
