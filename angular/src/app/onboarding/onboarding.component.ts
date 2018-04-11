@@ -1,5 +1,7 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { PermissionCheckerService } from '@abp/auth/permission-checker.service';
+
 import { OnboardingServiceProxy,
          SDIServiceProxy,
          SDI_DeveloperDto,
@@ -49,6 +51,7 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
     
     constructor(
         private injector: Injector,
+        private _permissionChecker: PermissionCheckerService,
         private _onboardingService: OnboardingServiceProxy,
         private _sdiRegistrationService: SDIRegistrationServiceProxy,
         private _sDIServiceProxy: SDIServiceProxy,
@@ -180,6 +183,14 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
         } else {
             return true;
         }
+    }
+
+    isAdminUser(): boolean {
+        if (this._permissionChecker.isGranted('Pages.Users')) {
+            return true;
+        }
+
+        return false;
     }
 
     loadPasscodeForApplicationFromDatabase(application: SDI_ApplicationDto): void {

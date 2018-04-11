@@ -20,8 +20,8 @@ import { OnboardingComponent } from '@app/onboarding/onboarding.component';
 
                     { path: 'onboarding', component: OnboardingComponent, data: { permission: 'Pages.Onboarding' }, canActivate: [AppRouteGuard] },
 
-                    //{ path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
-                    //{ path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
+                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
+                    { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     //{ path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     //{ path: 'about', component: AboutComponent }
                 ]

@@ -47,6 +47,9 @@ export class CreateDeveloperComponent extends AppComponentBase {
         this.application = new SDI_ApplicationDto();
         //this.application.init({sdI_DeveloperId: this.developer.id});
         this.application.init({ sdI_DeveloperId: this.developer.id, name: 'UniqueAppName 1', description: 'Application Description 1', website: 'http://localhost/', domain: 'ecommerce', approvalUrl: 'http://localhost:4200/notifications/PassCodeConsented', uploadUrl: 'http://localhost:4200/notifications/FileUploaded' });
+
+        this.developer.applications = [];
+        this.developer.applications.push(this.application);
     }
 
     onShown(): void {
@@ -55,6 +58,14 @@ export class CreateDeveloperComponent extends AppComponentBase {
 
     save(): void {
         this.saving = true;
+
+        this.signup = new SDISignupInput();
+        this.signup.developer = new Developer();
+        this.signup.developer.name = this.developer.name;
+        this.signup.developer.phone = this.developer.phone;
+        this.signup.developer.email = this.developer.email;
+        this.signup.developer.company = this.developer.company;
+        this.signup.developer.country = this.developer.country;
 
         this.signup.application =  new Application();
         this.signup.application.name = this.application.name;
@@ -66,12 +77,12 @@ export class CreateDeveloperComponent extends AppComponentBase {
 
         this._sdiRegistrationService.registerDeveloperAndApplication(this.signup)
         .finally(() => { this.saving = false; })
-        .subscribe((result: SDISignupOutput) => {
-            if (result.registrationUrl !== undefined) {
-                if (this.developer.applications !== undefined && this.developer.applications.length == 1) {
-                    this.developer.applications[0].registrationUrl = result.registrationUrl;
+        .subscribe((resultSdi: SDISignupOutput) => {
+            if (resultSdi.registrationUrl !== undefined) {
+                if (this.developer.applications !== undefined && this.developer.applications.length === 1) {
+                    this.developer.applications[0].registrationUrl = resultSdi.registrationUrl;
                 }
-                
+
                 this._onboardingService.create(this.developer)
                 .finally(() => { this.saving = false; })
                 .subscribe((result: SDI_DeveloperDto) => {
