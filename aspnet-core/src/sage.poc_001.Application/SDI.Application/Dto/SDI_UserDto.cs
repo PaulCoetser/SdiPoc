@@ -30,5 +30,8 @@ namespace sage.poc_001.SDI.Application.Dto
         [Required]
         [StringLength(SDI_User.MaxApplicationIdFromSdiPlatformLength)]
         public string ApplicationIdFromSdiPlatform { get; set; }
+
+        [StringLength(SDI_User.MaxApiKeyLength)]
+        public string ApiKeySdi { get; set; }
     }
 }

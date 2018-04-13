@@ -1335,6 +1335,62 @@ export class SDIServiceProxy {
         }
         return Observable.of<SDI_UserDto>(<any>null);
     }
+
+    /**
+     * @input (optional) 
+     * @return Success
+     */
+    updateApiKey(input: SDI_UserDto): Observable<SDI_UserDto> {
+        let url_ = this.baseUrl + "/api/services/app/SDI/UpdateApiKey";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
+            return this.processUpdateApiKey(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processUpdateApiKey(<any>response_);
+                } catch (e) {
+                    return <Observable<SDI_UserDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<SDI_UserDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdateApiKey(response: Response): Observable<SDI_UserDto> {
+        const status = response.status;
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? SDI_UserDto.fromJS(resultData200) : new SDI_UserDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<SDI_UserDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -3156,6 +3212,7 @@ export class SDI_UserDto implements ISDI_UserDto {
     sdI_ApplicationId: number;
     userId: number;
     applicationIdFromSdiPlatform: string;
+    apiKeySdi: string;
     id: number;
 
     constructor(data?: ISDI_UserDto) {
@@ -3175,6 +3232,7 @@ export class SDI_UserDto implements ISDI_UserDto {
             this.sdI_ApplicationId = data["sdI_ApplicationId"];
             this.userId = data["userId"];
             this.applicationIdFromSdiPlatform = data["applicationIdFromSdiPlatform"];
+            this.apiKeySdi = data["apiKeySdi"];
             this.id = data["id"];
         }
     }
@@ -3194,6 +3252,7 @@ export class SDI_UserDto implements ISDI_UserDto {
         data["sdI_ApplicationId"] = this.sdI_ApplicationId;
         data["userId"] = this.userId;
         data["applicationIdFromSdiPlatform"] = this.applicationIdFromSdiPlatform;
+        data["apiKeySdi"] = this.apiKeySdi;
         data["id"] = this.id;
         return data; 
     }
@@ -3213,6 +3272,7 @@ export interface ISDI_UserDto {
     sdI_ApplicationId: number;
     userId: number;
     applicationIdFromSdiPlatform: string;
+    apiKeySdi: string;
     id: number;
 }
 

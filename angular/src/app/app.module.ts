@@ -37,6 +37,7 @@ import { CreateDeveloperComponent } from './onboarding/create-developer/create-d
 import { EditDeveloperComponent } from './onboarding/edit-developer/edit-developer.component';
 import { CreateApplicationComponent } from './onboarding/create-application/create-application.component';
 import { EditApplicationComponent } from './onboarding/edit-application/edit-application.component';
+import { SDIEditUserComponent } from './onboarding/sdi-edit-user/sdi-edit-user.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { EditApplicationComponent } from './onboarding/edit-application/edit-app
         CreateDeveloperComponent,
         EditDeveloperComponent,
         CreateApplicationComponent,
-        EditApplicationComponent
+        EditApplicationComponent,
+        SDIEditUserComponent
     ],
     imports: [
         CommonModule,

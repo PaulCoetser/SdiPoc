@@ -19,6 +19,8 @@ import { CreateDeveloperComponent } from 'app/onboarding/create-developer/create
 import { EditApplicationComponent } from 'app/onboarding/edit-application/edit-application.component';
 import { CreateApplicationComponent } from 'app/onboarding/create-application/create-application.component';
 
+import { SDIEditUserComponent } from 'app/onboarding/sdi-edit-user/sdi-edit-user.component';
+
 import { AppComponentBase } from '@shared/app-component-base';
 import { UtilsService } from '@abp/utils/utils.service';
 
@@ -40,6 +42,8 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
     @ViewChild('createApplicationModal') createApplicationModal: CreateApplicationComponent;
     @ViewChild('editApplicationModal') editApplicationModal: EditApplicationComponent;
 
+    @ViewChild('sdiEditUserModal') sdiEditUserModal: SDIEditUserComponent;
+
     developers: SDI_DeveloperDto[] = [];
     selectedDeveloper: SDI_DeveloperDto = undefined;
     applications: SDI_ApplicationDto[] = [];
@@ -48,7 +52,7 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
     isApplicationTableLoading = false;
     isUserPasscodeTableLoading = false;
     refreshLoading = false;
-    
+
     constructor(
         private injector: Injector,
         private _permissionChecker: PermissionCheckerService,
@@ -233,6 +237,10 @@ export class OnboardingComponent extends PagedListingComponentBase<SDI_Developer
             var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
             return v.toString(16);
         });
+    }
+
+    enterSDIApiKey(): void {
+        this.sdiEditUserModal.show(this.selectedUser);
     }
 
     refreshPasscode(): void {

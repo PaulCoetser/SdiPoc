@@ -27,7 +27,7 @@ namespace sage.poc_001.SDI.Onboarding
         public string Description { get; set; }
         [Required]
         [StringLength(MaxDomainLength)]
-        public string Domain{ get; set; }
+        public string Domain { get; set; }
         [StringLength(MaxApprovalUrlLength)]
         public string ApprovalUrl { get; set; }
         [StringLength(MaxUploadUrlLength)]

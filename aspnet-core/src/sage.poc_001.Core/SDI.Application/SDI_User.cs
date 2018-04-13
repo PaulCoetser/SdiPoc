@@ -17,7 +17,8 @@ namespace sage.poc_001.SDI.Application
         public const int MaxSecretLength = 64;
         public const int MaxPasscodeLength = 10;
         public const int MaxApplicationIdFromSdiPlatformLength = 32;
-        
+        public const int MaxApiKeyLength = 32;
+
         [Required]
         [StringLength(MaxSecretLength)]
         public string Secret { get; set; }
@@ -44,5 +45,8 @@ namespace sage.poc_001.SDI.Application
 
         [ForeignKey("UserId")]
         public virtual User SystemUser { get; set; }
+
+        [StringLength(MaxApiKeyLength)]
+        public string ApiKeySdi { get; set; }
     }
 }

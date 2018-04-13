@@ -53,5 +53,22 @@ namespace sage.poc_001.SDI.Application
 
             return ObjectMapper.Map<SDI_UserDto>(user);
         }
+
+        public async Task<SDI_UserDto> UpdateApiKey(SDI_UserDto input)
+        {
+            var user = await _sdiUserRepository.FirstOrDefaultAsync(t => t.Id == input.Id && t.SDI_ApplicationId == input.SDI_ApplicationId); //there should only be one.  if not a passcode needs to be created by calling program, but we return null if it does not exist
+
+            //cant find the user so we Create it and return it.
+            if (user == null)
+                throw new System.Exception("User should exists");
+
+            ObjectMapper.Map(input, user);
+
+            await _sdiUserRepository.UpdateAsync(user);
+
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+            return ObjectMapper.Map<SDI_UserDto>(user);
+        }
     }
 }

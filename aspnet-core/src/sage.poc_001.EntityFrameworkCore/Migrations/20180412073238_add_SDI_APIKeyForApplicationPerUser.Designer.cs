@@ -16,9 +16,10 @@ using System;
 namespace sage.poc_001.Migrations
 {
     [DbContext(typeof(poc_001DbContext))]
-    partial class poc_001DbContextModelSnapshot : ModelSnapshot
+    [Migration("20180412073238_add_SDI_APIKeyForApplicationPerUser")]
+    partial class add_SDI_APIKeyForApplicationPerUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

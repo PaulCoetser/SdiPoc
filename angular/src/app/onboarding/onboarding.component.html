@@ -165,6 +165,7 @@
                         <thead >
                             <tr>
                                 <th>{{l("Passcode")}}</th>
+                                <th>{{l("ApiKeySdi")}}</th>
                                 <th>{{l("Expires")}}</th>
                                 <th>{{l("Actions")}}</th>
                             </tr>
@@ -172,10 +173,29 @@
                         <tbody>
                             <tr>
                                 <td>{{selectedUser.passcode}}</td>
+                                <td>{{selectedUser.apiKeySdi}}</td>
                                 <td>{{selectedUser.expires}}</td>
-                                <button id="PasscodeButton2" class="btn btn-block bg-pink waves-effect" (click)="refreshPasscode()" type="button">Refresh passcode
+
+                                <td class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">menu</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="refreshPasscode()"><i class="material-icons">refresh</i>Refresh Passcode</a></li>
+                                        <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="enterSDIApiKey()"><i class="material-icons">create</i>Edit</a></li>
+                                        <!--<li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="deleteApplication(application)"><i class="material-icons">delete_sweep</i>Delete</a></li> -->
+                                    </ul>
+                                </td>
+
+
+                               <!-- <button id="PasscodeButton2" class="btn btn-block bg-pink waves-effect" (click)="refreshPasscode()" type="button">Refresh passcode
                                         <i class="fa fa-spin fa-spinner" *ngIf="refreshLoading"></i>
                                     </button>
+                                    <button id="btnEditPasscode" class="btn btn-block bg-pink waves-effect" (click)="enterSDIApiKey()" type="button">edit
+                                        <i class="fa fa-spin fa-spinner" *ngIf="refreshLoading"></i>
+                                    </button>
+                                -->
+
                             </tr>
                         </tbody>
                     </table>
@@ -187,6 +207,8 @@
 
 <create-developer-modal #createDeveloperModal (modalSave)="refresh()"></create-developer-modal>
 <edit-developer-modal #editDeveloperModal (modalSave)="refresh()"></edit-developer-modal>
+<sdi-edit-user-modal #sdiEditUserModal (modalSave)="refresh()"></sdi-edit-user-modal>
+
 
 <create-application-modal #createApplicationModal (modalSave)="refreshApplications()"></create-application-modal>
 <edit-application-modal #editApplicationModal (modalSave)="refreshApplications()"></edit-application-modal>
